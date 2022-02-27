@@ -1,0 +1,14 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "description": "App para majenar proyectos",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "author": "Jhonny Mendoza",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
