@@ -32,6 +32,10 @@ const usuarioSchema = mongoose.Schema({
 
 //Encriptado de password de usuario
 usuarioSchema.pre('save', async function(next){
+    //verificar si el password cambio
+    if(!this.isModified('password')){
+        next()
+    }
 
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)
