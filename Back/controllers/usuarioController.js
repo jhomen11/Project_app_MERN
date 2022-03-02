@@ -2,6 +2,8 @@ import Usuario from "../models/Usuario.js"
 import generarId from "../helpers/generaId.js"
 import generarJWT from "../helpers/generarJWT.js"
 
+
+//Registro de nuevos usuarios
 const registrarUsuario = async (req, res) => {
 
     //validacion de datos duplicados
@@ -24,6 +26,7 @@ const registrarUsuario = async (req, res) => {
     }
 }
 
+//Login de usuarios
 const autenticarUsuario = async (req, res) =>{
 
     const { email, password } = req.body
@@ -55,8 +58,28 @@ const autenticarUsuario = async (req, res) =>{
     }
 }
 
+const confirmarCuenta = async (req, res) => {
+    //Validamos si el token existe en la bd
+    const { token } = req.params
+    const usuarioConfirmar = await Usuario.findOne({token})
+    if(!usuarioConfirmar){
+        const error = new Error("Token Invalido")
+        return res.status(404).json({msg: error.message})
+    }
+
+    try {
+        //si el token existe se cambia el estado confirmado a true
+        usuarioConfirmar.confirmado = true
+        //Eliminamos el token luego de confirmar la cuenta de usuario
+        usuarioConfirmar.token = ''
+        await usuarioConfirmar.save()
+        res.json({msg: 'Usuario Confirmado Correctamente'})
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 export {
-    registrarUsuario, autenticarUsuario
+    registrarUsuario, autenticarUsuario, confirmarCuenta
 }
