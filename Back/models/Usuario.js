@@ -41,6 +41,7 @@ usuarioSchema.pre('save', async function(next){
     this.password = await bcrypt.hash(this.password, salt)
 })
 
+//verificacion de clave introducida para el login
 usuarioSchema.methods.comprobarPassword = async function(passwordFormulario){
     return await bcrypt.compare(passwordFormulario, this.password)
 }

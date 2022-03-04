@@ -78,8 +78,44 @@ const confirmarCuenta = async (req, res) => {
         console.log(error)
     }
 }
+//Funcion para gestionar cambio de contraseña
+const olvidoPassword = async (req, res) => {
+
+    const { email } = req.body
+    const usuario = await Usuario.findOne({ email })
+    if(!usuario){
+        const error = new Error("El correo ingresado no existe")
+        return res.status(404).json({msg: error.message})
+    }
+
+    try {
+        usuario.token = generarId()
+        await usuario.save()
+        res.json({msg: "Hemos enviado las instrucciones para generar su contraseña"})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//Funcion para comprobar el token para cambio de contraseña
+const comprobarToken = async (req, res) => {
+    const { token } = req.params
+
+    const tokenValido = await Usuario.findOne({ token })
+
+    if(tokenValido){
+        res.json({msg: "Token Válido"})
+    }else{
+        const error = new Error("Token Invalido")
+        return res.status(404).json({msg: error.message})
+    }
+}
 
 
 export {
-    registrarUsuario, autenticarUsuario, confirmarCuenta
+    registrarUsuario, 
+    autenticarUsuario, 
+    confirmarCuenta, 
+    olvidoPassword,
+     comprobarToken
 }
