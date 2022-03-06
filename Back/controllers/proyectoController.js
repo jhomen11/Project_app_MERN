@@ -13,7 +13,10 @@ const nuevoProyecto = async (req, res) =>{
    }
 }
 
-const obtenerProyectos = async (req, res) =>{}
+const obtenerProyectos = async (req, res) =>{
+    const proyecto = await Proyecto.find().where('creador').equals(req.usuario)
+    res.json(proyecto)
+}
 const obtenerProyecto = async (req, res) =>{}
 const editarProyectos = async (req, res) =>{}
 const eliminarProyectos = async (req, res) =>{}
