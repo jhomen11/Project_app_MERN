@@ -1,6 +1,18 @@
+import Proyecto from "../models/Proyecto.js"
 
+const nuevoProyecto = async (req, res) =>{
+    //Crear nuevo proyecto
+   const proyecto = new Proyecto(req.body)
+   proyecto.creador = req.usuario._id
 
-const nuevoProyecto = async (req, res) =>{}
+   try {
+       const proyectoGuardado = await proyecto.save()
+       res.json(proyectoGuardado)
+   } catch (error) {
+       console.log(error)
+   }
+}
+
 const obtenerProyectos = async (req, res) =>{}
 const obtenerProyecto = async (req, res) =>{}
 const editarProyectos = async (req, res) =>{}
