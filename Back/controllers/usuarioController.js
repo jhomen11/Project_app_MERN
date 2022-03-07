@@ -11,7 +11,7 @@ const registrarUsuario = async (req, res) => {
     const usuarioExiste = await Usuario.findOne({ email })
     
     if(usuarioExiste){
-        const error = new Error("El correo ingresado ya existe en la base de dtos")
+        const error = new Error("El correo ingresado ya existe en la base de datos")
         return res.status(400).json({msg: error.message})
     }
     
