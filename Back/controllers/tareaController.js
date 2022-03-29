@@ -17,7 +17,7 @@ const agregarTarea = async (req, res) =>{
     //Comprobar si la persona quien esta creando la tarea es quien creo el proyecto
     if(existeProyecto.creador.toString() !== req.usuario._id.toString()){
         const error = new Error("No tiene permisos para agregar tareas")
-        return res.status(401).json({msg: error.message})
+        return res.status(403).json({msg: error.message})
     }
     try {
         const tareaGuardada = await Tarea.create(req.body)
@@ -27,7 +27,21 @@ const agregarTarea = async (req, res) =>{
     }
 }
 const obtenerTarea = async (req, res) =>{
-    
+    const { id } = req.params
+
+    //Consultar si la tarea existe en la bd
+    const tarea = await Tarea.findById(id).populate("proyecto")
+    console.log(tarea)
+    if(!tarea){
+        const error = new Error("La Tarea no Existe")
+        return res.status(404).json({msg: error.message})
+    }
+    //Validando si el id del usuario pertenece al mismo que lo esta consultando
+    if(tarea.proyecto.creador.toString() !== req.usuario._id.toString()){
+        const error = new Error("Accion No Permitida")
+        return res.status(403).json({msg: error.message})
+    }
+    res.json(tarea)
 }
 const actualizarTarea = async (req, res) =>{
     
