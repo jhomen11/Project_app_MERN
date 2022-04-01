@@ -44,7 +44,32 @@ const obtenerTarea = async (req, res) =>{
     res.json(tarea)
 }
 const actualizarTarea = async (req, res) =>{
-    
+    const { id } = req.params
+
+    //Consultar si la tarea existe en la bd
+    const tarea = await Tarea.findById(id).populate("proyecto")
+    console.log(tarea)
+    if(!tarea){
+        const error = new Error("La Tarea no Existe")
+        return res.status(404).json({msg: error.message})
+    }
+    //Validando si el id del usuario pertenece al mismo que lo esta consultando
+    if(tarea.proyecto.creador.toString() !== req.usuario._id.toString()){
+        const error = new Error("Accion No Permitida")
+        return res.status(403).json({msg: error.message})
+    }
+
+    tarea.nombre = req.body.nombre || tarea.nombre
+    tarea.descripcion = req.body.descripcion || tarea.descripcion
+    tarea.fechaEntrega = req.body.fechaEntrega || tarea.fechaEntrega
+    tarea.prioridad = req.body.prioridad || tarea.prioridad
+
+    try {
+        const tareaEditada = await tarea.save()
+        res.json(tareaEditada)    
+    } catch (error) {
+        console.log(error)
+    }
 }
 const eliminarTarea = async (req, res) =>{
     
