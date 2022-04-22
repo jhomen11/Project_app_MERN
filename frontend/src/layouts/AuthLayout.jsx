@@ -3,8 +3,9 @@ import { Outlet } from "react-router-dom";
 const AuthLayout = () => {
   return (
     <>
-      <div>AuthLayout</div>
-      <Outlet />
+      <main className="container mt-5">
+        <Outlet />
+      </main>
     </>
   );
 };
