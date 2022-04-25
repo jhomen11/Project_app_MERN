@@ -11,7 +11,7 @@ const registrarUsuario = async (req, res) => {
     const usuarioExiste = await Usuario.findOne({ email })
     
     if(usuarioExiste){
-        const error = new Error("El correo ingresado ya existe en la base de datos")
+        const error = new Error("El correo ingresado ya se encuentra registrado")
         return res.status(400).json({msg: error.message})
     }
     
@@ -19,8 +19,8 @@ const registrarUsuario = async (req, res) => {
         //Almacenar información en la BD
         const usuario = new Usuario(req.body)
         usuario.token = generarId()
-        const usuarioGuardado = await usuario.save()
-        res.json(usuarioGuardado)
+        await usuario.save()
+        res.json({msg: "Usuario Creado Correctamente, Revisa tu Email para confirmar tu cuenta"})
     } catch (error) {
         console.log(error)
     }

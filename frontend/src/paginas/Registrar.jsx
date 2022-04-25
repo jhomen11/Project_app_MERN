@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Alertas from "../components/Alertas";
+import axios from 'axios'
 
 
 const Registrar = () => {
@@ -11,7 +12,7 @@ const Registrar = () => {
   const [repetirPassword, setrepetirPassword] = useState('')
   const [alerta, setAlerta] = useState({})
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     
     e.preventDefault()
 
@@ -22,6 +23,49 @@ const Registrar = () => {
         error: true
       })
       return
+    }
+
+    if(password !== repetirPassword){
+      setAlerta({
+        msg: 'Los password deben ser iguales',
+        error: true
+      })
+      return
+    }
+
+    if(password.length < 1 ){
+      setAlerta({
+        msg: 'El password debe tener minimo 6 caracteres',
+        error: true
+      })
+      return
+    }
+
+    setAlerta({})
+
+    //Crear usuario en la api
+    try {
+      const respuesta = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/usuarios`, {
+        nombre, email, password })
+        setAlerta({
+          msg: respuesta.data.msg,
+          error: false
+        })
+
+        setNombre('')
+        setEmail('')
+        setPassword('')
+        setrepetirPassword('')
+        
+        setTimeout(()=>{
+          setAlerta({})
+        },4000)
+
+    } catch (error) {
+      setAlerta({
+        msg: error.response.data.msg,
+        error: true
+      })
     }
   }
 
@@ -57,7 +101,7 @@ const Registrar = () => {
               type="nombre"
               id="nombre"
               placeholder="Nombre"
-              name={nombre}
+              value={nombre}
               onChange={ e => setNombre(e.target.value)}
             />
           </div>
