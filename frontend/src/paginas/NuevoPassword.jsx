@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom"
+
 
 const NuevoPassword = () => {
   return (
     <>
       <div className="container contenedor-login">
-        <div className="recuperar-cuenta">
+        <div className="cuenta">
           <h1 className="h1-titulo">
             Reestablece tu <span>Password</span>
           </h1>
