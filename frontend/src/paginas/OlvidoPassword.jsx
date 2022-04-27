@@ -1,6 +1,12 @@
+
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const OlvidoPassword = () => {
+
+  const[email, setEmail] = useState('')
+  const[alerta, setAlerta] = useState('')
+
   return (
     <>
       <div className="container contenedor-login">
