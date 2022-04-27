@@ -74,7 +74,7 @@ const confirmarCuenta = async (req, res) => {
     const usuarioConfirmar = await Usuario.findOne({token})
     if(!usuarioConfirmar){
         const error = new Error("Token Invalido")
-        return res.status(404).json({msg: error.message})
+        return res.status(403).json({msg: error.message})
     }
 
     try {
