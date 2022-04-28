@@ -27,6 +27,7 @@ const OlvidoPassword = () => {
         msg: data.msg,
         error: false
       })
+      setEmail('')
 
 
     } catch (error) {

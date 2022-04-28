@@ -143,7 +143,7 @@ const nuevoPassword = async (req, res) =>{
         
         try {
             await usuario.save()
-        res.json({msg: "Contraseña Modificada con Éxito"})
+        res.json({msg: "Password Modificado con Éxito"})
         } catch (error) {
             console.log(error)
         }
