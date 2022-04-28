@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import clienteAxios from "../config/clienteAxios";
 import Alertas from "../components/Alertas";
 
 const OlvidoPassword = () => {
@@ -21,7 +21,7 @@ const OlvidoPassword = () => {
     }
 
     try {
-      const { data } = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/usuarios/olvido-password`,{ email })
+      const { data } = await clienteAxios.post(`/usuarios/olvido-password`,{ email })
       
       setAlerta({
         msg: data.msg,
