@@ -7,7 +7,7 @@ import Login from "./paginas/Login.jsx";
 import NuevoPassword from "./paginas/NuevoPassword";
 import OlvidoPassword from "./paginas/OlvidoPassword";
 import Registrar from "./paginas/Registrar";
-import Proyectos from "./paginas/proyectos/Proyectos.jsx";
+import Proyectos from "./paginas/Proyectos.jsx";
 
 
 import { AuthProvider } from "./context/AuthProvider";
