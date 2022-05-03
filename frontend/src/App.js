@@ -1,10 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthLayout from "./layouts/AuthLayout.jsx";
+import RutaProtegida from "./layouts/RutaProtegida.jsx";
+
 import ConfirmarCuenta from "./paginas/ConfirmarCuenta.jsx";
 import Login from "./paginas/Login.jsx";
 import NuevoPassword from "./paginas/NuevoPassword";
 import OlvidoPassword from "./paginas/OlvidoPassword";
 import Registrar from "./paginas/Registrar";
+import Proyectos from "./paginas/proyectos/Proyectos.jsx";
+
 
 import { AuthProvider } from "./context/AuthProvider";
 
@@ -23,6 +27,11 @@ const App = () => {
                 element={<NuevoPassword />}
               />
               <Route path="confirmar/:id" element={<ConfirmarCuenta />} />
+            </Route>
+
+            {/* Rutas privadas */}
+            <Route path="/proyectos" element={<RutaProtegida />}>
+              <Route index element={<Proyectos />}/>
             </Route>
           </Routes>
         </AuthProvider>
