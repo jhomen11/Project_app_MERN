@@ -1,5 +1,40 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Alertas from '../components/Alertas'
+import clienteAxios from "../config/clienteAxios";
+
+
 const Login = () => {
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [alerta, setAlerta] = useState({})
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    if([email, password].includes('')){
+      setAlerta({
+        msg: 'Todos los campos son obligatorios',
+        error: true
+      })
+      return
+    }
+    try {
+      const { data } = await clienteAxios.post(`usuarios/login`, { email, password})
+      setAlerta({})
+      localStorage.setItem('token', data.token)
+      
+    } catch (error) {
+      setAlerta({
+        msg: error.response.data.msg ,
+        error: true
+      })
+    }
+  }
+
+  const { msg } = alerta
+
   return (
     <>
       <div className="container contenedor-login">
@@ -12,7 +47,14 @@ const Login = () => {
           </p>
         </div>
         <div className="contenido-titulo">
-          <form className="formulario">
+
+          {msg && <Alertas alerta={alerta}/>}
+
+          <form 
+            className="formulario"
+            onSubmit={handleSubmit}
+          
+          >
             <div className="my-2">
               <label className="d-block label-auth" htmlFor="email">
                 Email
@@ -22,6 +64,8 @@ const Login = () => {
                 type="email"
                 id="email"
                 placeholder="Email de Registro"
+                value={email}
+                onChange={ e => setEmail(e.target.value)}
               />
             </div>
             <div>
@@ -33,6 +77,8 @@ const Login = () => {
                 type="password"
                 id="password"
                 placeholder="Password"
+                value={password}
+                onChange={ e => setPassword(e.target.value)}
               />
             </div>
             <input
