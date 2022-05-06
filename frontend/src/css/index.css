@@ -3,7 +3,6 @@ body {
 }
 
 .contenedor-login{
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -115,9 +114,10 @@ body {
 /* escritorio normales */
 @media (min-width: 992px) {
   .contenedor-login{
+    height: 100vh;
     flex-direction: row;
     align-items: center;
-    margin-top: -50px;
+    /* margin-top: -50px; */
     padding: 0 10px;
   }
   .h1-titulo{

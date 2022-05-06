@@ -75,7 +75,7 @@ const Registrar = () => {
     <div className="container contenedor-login">
       <div className="contenido-titulo">
         <h1 className="h1-titulo">
-          Bienvenido a <span>Proyect Manager</span>
+          Bienvenido a <span>Project Manager</span>
         </h1>
         <p>Si tienes una cuenta inicia sesión y administra tus Proyectos</p>
         <Link className="link" to={"/login"}>Inicia Sesión</Link>
